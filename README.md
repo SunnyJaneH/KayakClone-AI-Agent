@@ -163,7 +163,12 @@ ai/
 │   └── redis_client.py         # Redis connection (5 KB)
 ├── interfaces/
 │   └── deals_cache.py          # In-memory deals cache interface
-├── kafka_client/               # Kafka consumer/producer wrappers
+├── kafka_client/
+│   ├── kafka_consumer.py       # Kafka consumer for listing.events (8 KB)
+│   ├── kafka_producer.py       # Kafka producer for deals.* topics (10 KB)
+│   ├── memory_kafka.py         # In-memory Kafka fallback (9 KB)
+│   ├── message_schemas.py      # Kafka message schemas (8 KB)
+│   └── interface.py            # Kafka client interface
 ├── llm/                        # LLM abstraction (OpenAI / Ollama / Gemini)
 ├── models/
 │   ├── database.py             # SQLite engine + session + init_db()
@@ -184,6 +189,22 @@ ai/
 ```
 
 ---
+
+## Frontend Integration (React)
+
+Built all AI-facing React components under `frontend/src/components/ai/` and the API client:
+
+| File | Size | Purpose |
+|------|------|---------|
+| `AiChatWidget.jsx` | 13 KB | Main chat interface — message input, response rendering, session management |
+| `AiBundleCard.jsx` | 7 KB | Bundle option card with Fit Score, why\_this, what\_to\_watch |
+| `AiQuoteModal.jsx` | 11 KB | Full quote breakdown modal — fare class, baggage, taxes, cancellation |
+| `AiWatchesPanel.jsx` | 11 KB | Active watches list with threshold display |
+| `AiPriceAnalysis.jsx` | 9 KB | Price analysis display — deal score, % below average, verdict |
+| `AiPolicyInfo.jsx` | 9 KB | Policy display for cancellation, pet, baggage policies |
+| `AiChangeHighlight.jsx` | 5 KB | Highlights preference changes when refining search |
+| `ai.css` | 32 KB | AI Mode styling |
+| `api/aiService.js` | 7 KB | HTTP client — calls `/api/ai/chat`, bundles, quotes, watches endpoints |
 
 ## Data Models (SQLModel + Pydantic v2)
 
