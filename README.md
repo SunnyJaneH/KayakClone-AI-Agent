@@ -2,7 +2,13 @@
 
 AI Recommendation Service for a distributed travel metasearch platform, built as part of **DATA 236: Distributed Systems** at San Jose State University (Fall 2025).
 
-> **My contribution** in a 6-person team project — I designed and implemented the entire `ai/` service independently, including the Concierge Agent, Deals Agent, semantic cache, WebSocket notifications, AI frontend tab, and Kafka integration. The full platform repository is at [zohebwaghu/Kayak---DATA-236-Final-Project](https://github.com/zohebwaghu/Kayak---DATA-236-Final-Project).
+> **My contribution** in a 6-person team project. I owned the entire AI layer end-to-end:
+>
+> - **Backend**: Concierge Agent (MRKL, 6 tools), Deals Agent, semantic cache (Redis + embeddings), WebSocket notifications, FastAPI service (`main.py`, `api/`, `agents/`, `algorithms/`, `cache/`, `models/`)
+> - **Kafka integration**: consumer (`listing.events`) and producer (`deals.scored`, `deals.tagged`, `deal.events`) via `kafka_client/` — connecting the AI service into the platform's event streaming backbone
+> - **Frontend**: 8 React components (`AiChatWidget`, `AiBundleCard`, `AiQuoteModal`, `AiWatchesPanel`, `AiPriceAnalysis`, `AiPolicyInfo`, `AiChangeHighlight`) + `aiService.js` API client — the entire "AI Mode" tab in the user-facing app
+>
+> The full platform repository is at [zohebwaghu/Kayak---DATA-236-Final-Project](https://github.com/zohebwaghu/Kayak---DATA-236-Final-Project).
 
 ---
 
@@ -130,6 +136,9 @@ After the Concierge Agent confirms a booking, users are redirected to the bookin
 | AI persistence | SQLite + SQLModel + Pydantic v2 |
 | Message queue | Apache Kafka — consumer: `listing.events`; producer: `deals.scored`, `deals.tagged`, `deal.events` |
 | Real-time | WebSocket — watch alerts and deal notifications |
+| Frontend | React 19 + Redux Toolkit + React Router v7 |
+| UI styling | Bootstrap 5 + Bootstrap Icons + custom CSS (ai.css 32 KB) |
+| HTTP client | Axios — all AI endpoint calls via `aiService.js` |
 | Containerization | Docker / AWS ECR |
 
 ---
@@ -186,6 +195,19 @@ ai/
 ├── .env.example
 ├── QUICK_START.md
 └── START_AI_SERVICE.md
+
+frontend_components/          # AI-related React components (copied from frontend/src/)
+├── components/
+│   ├── AiChatWidget.jsx      # Main chat interface (13 KB)
+│   ├── AiBundleCard.jsx      # Bundle card with Fit Score (7 KB)
+│   ├── AiQuoteModal.jsx      # Quote breakdown modal (11 KB)
+│   ├── AiWatchesPanel.jsx    # Active watches panel (11 KB)
+│   ├── AiPriceAnalysis.jsx   # Price analysis display (9 KB)
+│   ├── AiPolicyInfo.jsx      # Policy info display (9 KB)
+│   ├── AiChangeHighlight.jsx # Search refinement highlights (5 KB)
+│   └── ai.css                # AI Mode styling (32 KB)
+└── api/
+    └── aiService.js          # HTTP client for AI endpoints (7 KB)
 ```
 
 ---
