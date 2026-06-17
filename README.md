@@ -12,6 +12,13 @@ AI Recommendation Service for a distributed travel metasearch platform, built as
 
 ---
 
+## Architecture
+
+![Architecture diagram](docs/images/architecture.png)
+*End-to-end architecture: React AI frontend → FastAPI → MRKL agents → Redis semantic cache + Kafka pipeline + SQLite persistence + WebSocket notifications*
+
+---
+
 ## System Overview
 
 The AI service runs as a standalone FastAPI microservice (`kayak-ai-service`, port 8000) within a 14-container Docker stack, integrated with Kafka for event streaming and Redis for semantic caching.
